@@ -17,11 +17,12 @@ def transfer_money():
   if not sender or not recipient or amount is None:
     return jsonify({"error": "Missing required fields"}), 400
 
+  if not isinstance(amount, (int, float)) or amount <= 0:
+    return jsonify({"error": "Amount must be a positive number"}), 400
+
   if sender not in accounts or recipient not in accounts:
     return jsonify({"error": "User not found"}), 404
 
-  # BUG / LOOPHOLE: No check for negative numbers!
-  # If amount is -500: sender gets +500, recipient loses 500.
   accounts[sender] -= amount
   accounts[recipient] += amount
 
