@@ -23,8 +23,9 @@ def transfer_money():
   if sender not in accounts or recipient not in accounts:
     return jsonify({"error": "User not found"}), 404
 
-  accounts[sender] -= amount
-  accounts[recipient] += amount
+  int_amount = int(amount)
+  accounts[sender] -= int_amount
+  accounts[recipient] += int_amount
 
   return (
       jsonify({
